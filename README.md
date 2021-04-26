@@ -1,8 +1,10 @@
-1¡¢»·¾³ÅäÖÃ
-  vs2017
-  vcpkg
+ï»¿1ã€ç¯å¢ƒé…ç½®
+
+    vs2017
+    vcpkg
   
   
-2¡¢°²×°ÒÀÀµ
-  vcpkg install coin:x64-windows soqt:x64-windows gtest:x64-windows glog:x64-windows
+2ã€å®‰è£…ä¾èµ–
+
+    vcpkg install coin:x64-windows soqt:x64-windows gtest:x64-windows glog:x64-windows
 
