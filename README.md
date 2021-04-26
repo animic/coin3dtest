@@ -4,5 +4,5 @@
   
   
 2¡¢°²×°ÒÀÀµ
-  vcpkg install nlohmann-json:x64-windows opencv:x64-windows tiff:x64-windows gtest:x64-windows glog:x64-windows
+  vcpkg install coin:x64-windows soqt:x64-windows gtest:x64-windows glog:x64-windows
 
