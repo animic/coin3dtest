@@ -1,0 +1,43 @@
+﻿{
+  "configurations": [
+    {
+      "name": "x64-Release",
+      "generator": "Ninja",
+      "configurationType": "Release",
+      "inheritEnvironments": [
+        "msvc_x64_x64"
+      ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "-DCMAKE_TOOLCHAIN_FILE=E:/SDK/vc/scripts/buildsystems/vcpkg.cmake -DPython3_EXECUTABLE=E:\\SDK\\vc\\installed\\x64-windows\\tools\\python3\\python.exe",
+      "buildCommandArgs": "-v",
+      "ctestCommandArgs": ""
+    },
+    {
+      "name": "x64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [
+        "msvc_x64_x64"
+      ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "-DCMAKE_TOOLCHAIN_FILE=E:/SDK/vc/scripts/buildsystems/vcpkg.cmake -DPython3_EXECUTABLE=E:\\SDK\\vc\\installed\\x64-windows\\tools\\python3\\python.exe -DFOO_DEVELOPING:BOOL=ON -DFOO_APP_CONSOLE:BOOL=ON",
+      "buildCommandArgs": "-v",
+      "ctestCommandArgs": ""
+    },
+    {
+      "name": "x64-Debug-aisa",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [
+        "msvc_x64_x64"
+      ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "-DCMAKE_TOOLCHAIN_FILE=F:/SDK/vcpkg/scripts/buildsystems/vcpkg.cmake -DPython3_EXECUTABLE=E:/SDK/vcpkg/downloads/tools/python/python-3.8.3-x64/python.exe -DFOO_DEVELOPING:BOOL=ON \"-DMATLAB_PATH=C:/Program Files/MATLAB/R2017b\"",
+      "buildCommandArgs": "-v",
+      "ctestCommandArgs": ""
+    }
+  ]
+}

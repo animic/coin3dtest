@@ -1,0 +1,7 @@
+
+#define APP_VERSION_MAJOR @APP_VERSION_MAJOR@
+#define APP_VERSION_MINOR @APP_VERSION_MINOR@
+#define APP_VERSION_PATCH @APP_VERSION_PATCH@
+
+#define STR(s) #s
+#define VERSION(a,b,c)  "App V" STR(a) "." STR(b) "." STR(c) " " __DATE__
