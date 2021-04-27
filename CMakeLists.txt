@@ -50,6 +50,7 @@ link_libraries(SoQt::SoQt)
 link_libraries(Qt::Mqtt)
 
 add_subdirectory(src/test00)
+add_subdirectory(src/test01)
 
 enable_testing()
 ADD_TEST(NAME test00 COMMAND test00)
