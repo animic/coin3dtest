@@ -29,6 +29,7 @@ find_package(GTest CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(coin CONFIG REQUIRED)
 find_package(soqt CONFIG REQUIRED)
+find_package(Qt5Mqtt CONFIG REQUIRED)
 
 add_definitions(-DUNICODE -D_UNICODE)
 
@@ -46,6 +47,7 @@ link_libraries(${TIFF_LIBS})
 link_libraries(nlohmann_json::nlohmann_json)
 link_libraries(Coin::Coin)
 link_libraries(SoQt::SoQt)
+link_libraries(Qt::Mqtt)
 
 add_subdirectory(src/test00)
 

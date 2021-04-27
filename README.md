@@ -6,5 +6,5 @@
   
 2. 安装依赖
 
-    vcpkg install coin:x64-windows soqt:x64-windows gtest:x64-windows glog:x64-windows
+    vcpkg install coin:x64-windows soqt:x64-windows gtest:x64-windows glog:x64-windows qt5-mqtt:x64-windows
 
