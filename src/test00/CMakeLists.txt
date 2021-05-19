@@ -6,7 +6,6 @@ if(CMAKE_VERSION VERSION_LESS "3.7.0")
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
 endif()
 
-FIND_PACKAGE(Qt5 REQUIRED COMPONENTS Core Widgets Gui Charts PrintSupport)
 
 set(PROJECT_NAME test00)
 

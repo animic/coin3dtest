@@ -29,7 +29,7 @@ find_package(GTest CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(coin CONFIG REQUIRED)
 find_package(soqt CONFIG REQUIRED)
-find_package(Qt5Mqtt CONFIG REQUIRED)
+FIND_PACKAGE(Qt5 REQUIRED COMPONENTS Core Widgets Gui Charts PrintSupport Mqtt)
 
 add_definitions(-DUNICODE -D_UNICODE)
 
