@@ -54,6 +54,22 @@ void ChartView::init()
 	//![1]
 	Chart *chart = new Chart();
 
+	QValueAxis *xAxis = new QValueAxis();
+	QValueAxis *yAxis = new QValueAxis();
+
+	{
+		xAxis->setRange(0, 28);
+		yAxis->setRange(-0.2, 0.8);
+
+		xAxis->setTickCount(15);
+		yAxis->setTickCount(6);
+
+		xAxis->setLabelFormat("%.02f");
+
+		chart->addAxis(xAxis, Qt::AlignBottom);
+		chart->addAxis(yAxis, Qt::AlignLeft);
+	}
+
 	for ( int j = 0; j < 7; j++ )
 	{
 		QLineSeries *series = new QLineSeries();
@@ -63,10 +79,14 @@ void ChartView::init()
 			*series << p;
 		}
 		series->setName(QString(tr(u8"ËÙ¶È%1[t]")).arg(j));
+
 		chart->addSeries(series);
+
+		series->attachAxis(xAxis);
+		series->attachAxis(yAxis);
+
 	}
-	
-	chart->createDefaultAxes();
+
 	chart->setAnimationOptions(QChart::AllAnimations);
 	chart->setTitle("Zoom in/out example");
 	chart->setAnimationOptions(QChart::SeriesAnimations);
@@ -139,7 +159,11 @@ void ChartView::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_Down:
         chart()->scroll(0, -10);
-        break;
+		break;
+	case Qt::Key_R:
+		chart()->axisX()->setRange(0, 28);
+		chart()->axisY()->setRange(-0.2, 0.8);
+		break;
     default:
         QGraphicsView::keyPressEvent(event);
         break;
