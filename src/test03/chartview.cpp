@@ -58,6 +58,7 @@ void ChartView::init()
 	QValueAxis *yAxis = new QValueAxis();
 
 	{
+		xAxis->setTitleText(tr(u8"时间(s)"));
 		xAxis->setRange(0, 28);
 		yAxis->setRange(-0.2, 0.8);
 
@@ -84,12 +85,10 @@ void ChartView::init()
 
 		series->attachAxis(xAxis);
 		series->attachAxis(yAxis);
-
 	}
 
 	chart->setAnimationOptions(QChart::AllAnimations);
-	chart->setTitle("Zoom in/out example");
-	chart->setAnimationOptions(QChart::SeriesAnimations);
+	chart->setTitle(tr(u8"时域信号"));
 	chart->legend()->setAlignment(Qt::AlignBottom);
 
 	setChart(chart);
