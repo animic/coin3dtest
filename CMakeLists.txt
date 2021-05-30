@@ -51,6 +51,8 @@ link_libraries(Qt::Mqtt)
 
 add_subdirectory(src/test00)
 add_subdirectory(src/test01)
+add_subdirectory(src/test02)
+add_subdirectory(src/test03)
 
 enable_testing()
 ADD_TEST(NAME test00 COMMAND test00)
