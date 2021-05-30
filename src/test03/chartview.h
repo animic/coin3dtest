@@ -41,6 +41,7 @@ class ChartView : public QChartView
 {
 public:
     ChartView(QWidget *parent = 0);
+	~ChartView();
 
 public:
 	void init();
@@ -52,7 +53,12 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
-//![2]
+
+	void connectMarkers();
+	void disconnectMarkers();
+public slots:
+	void handleMarkerClicked();
+	//![2]
 
 private:
     bool m_isTouching;

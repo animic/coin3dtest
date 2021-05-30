@@ -34,6 +34,8 @@
 #include <QtCore/QRandomGenerator>
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QValueAxis>
+#include <QtCharts/QLegendMarker>
+#include <qDebug>
 
 ChartView::ChartView(QWidget *parent) :
     QChartView(nullptr, parent),
@@ -42,26 +44,37 @@ ChartView::ChartView(QWidget *parent) :
     setRubberBand(QChartView::RectangleRubberBand);
 }
 
+ChartView::~ChartView()
+{
+	disconnectMarkers();
+}
+
 void ChartView::init()
 {
 	//![1]
-	QLineSeries *series = new QLineSeries();
-	for (int i = 0; i < 500; i++) {
-		QPointF p((qreal)i, qSin(M_PI / 50 * i) * 100);
-		p.ry() += QRandomGenerator::global()->bounded(20);
-		*series << p;
-	}
-	//![1]
-
 	Chart *chart = new Chart();
+
+	for ( int j = 0; j < 7; j++ )
+	{
+		QLineSeries *series = new QLineSeries();
+		for (int i = 0; i < 500; i++) {
+			QPointF p((qreal)i + j * 10, qSin(M_PI / 50 * i) * 100);
+			p.ry() += QRandomGenerator::global()->bounded(20);
+			*series << p;
+		}
+		series->setName(QString(tr(u8"ËÙ¶È%1[t]")).arg(j));
+		chart->addSeries(series);
+	}
+	
+	chart->createDefaultAxes();
 	chart->setAnimationOptions(QChart::AllAnimations);
-	chart->addSeries(series);
 	chart->setTitle("Zoom in/out example");
 	chart->setAnimationOptions(QChart::SeriesAnimations);
-	chart->legend()->hide();
-	chart->createDefaultAxes();
+	chart->legend()->setAlignment(Qt::AlignBottom);
 
 	setChart(chart);
+
+	connectMarkers();
 }
 
 bool ChartView::viewportEvent(QEvent *event)
@@ -106,7 +119,6 @@ void ChartView::mouseReleaseEvent(QMouseEvent *event)
     QChartView::mouseReleaseEvent(event);
 }
 
-//![1]
 void ChartView::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
@@ -116,7 +128,6 @@ void ChartView::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Minus:
         chart()->zoomOut();
         break;
-//![1]
     case Qt::Key_Left:
         chart()->scroll(-10, 0);
         break;
@@ -133,4 +144,75 @@ void ChartView::keyPressEvent(QKeyEvent *event)
         QGraphicsView::keyPressEvent(event);
         break;
     }
+}
+
+void ChartView::connectMarkers()
+{
+	auto chart = this->chart();
+	const auto markers = chart->legend()->markers();
+	for (QLegendMarker *marker : markers) {
+		// Disconnect possible existing connection to avoid multiple connections
+		QObject::disconnect(marker, &QLegendMarker::clicked, this, &ChartView::handleMarkerClicked);
+		QObject::connect(marker, &QLegendMarker::clicked, this, &ChartView::handleMarkerClicked);
+	}
+}
+
+void ChartView::disconnectMarkers()
+{
+	auto chart = this->chart();
+	const auto markers = chart->legend()->markers();
+	for (QLegendMarker *marker : markers) {
+		QObject::disconnect(marker, &QLegendMarker::clicked, this, &ChartView::handleMarkerClicked);
+	}
+}
+
+void ChartView::handleMarkerClicked()
+{
+	QLegendMarker* marker = qobject_cast<QLegendMarker*> (sender());
+	Q_ASSERT(marker);
+
+	switch (marker->type())
+	{
+	case QLegendMarker::LegendMarkerTypeXY:
+	{
+		// Toggle visibility of series
+		marker->series()->setVisible(!marker->series()->isVisible());
+
+		// Turn legend marker back to visible, since hiding series also hides the marker
+		// and we don't want it to happen now.
+		marker->setVisible(true);
+
+		// Dim the marker, if series is not visible
+		qreal alpha = 1.0;
+
+		if (!marker->series()->isVisible())
+			alpha = 0.5;
+
+		QColor color;
+		QBrush brush = marker->labelBrush();
+		color = brush.color();
+		color.setAlphaF(alpha);
+		brush.setColor(color);
+		marker->setLabelBrush(brush);
+
+		brush = marker->brush();
+		color = brush.color();
+		color.setAlphaF(alpha);
+		brush.setColor(color);
+		marker->setBrush(brush);
+
+		QPen pen = marker->pen();
+		color = pen.color();
+		color.setAlphaF(alpha);
+		pen.setColor(color);
+		marker->setPen(pen);
+
+		break;
+	}
+	default:
+	{
+		qDebug() << "Unknown marker type";
+		break;
+	}
+	}
 }
