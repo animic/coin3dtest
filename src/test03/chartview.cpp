@@ -58,7 +58,6 @@ void ChartView::init()
 	QValueAxis *yAxis = new QValueAxis();
 
 	{
-		xAxis->setTitleText(tr(u8"时间(s)"));
 		xAxis->setRange(0, 28);
 		yAxis->setRange(-0.2, 0.8);
 
@@ -75,8 +74,9 @@ void ChartView::init()
 	{
 		QLineSeries *series = new QLineSeries();
 		for (int i = 0; i < 500; i++) {
-			QPointF p((qreal)i + j * 10, qSin(M_PI / 50 * i) * 100);
-			p.ry() += QRandomGenerator::global()->bounded(20);
+			QPointF p( (i*1.0/5 + j*1.0/5), qSin(M_PI / 20 * i) / 3.14);
+			p.ry() += QRandomGenerator::global()->bounded(0.05);
+			p.ry() += 0.3;
 			*series << p;
 		}
 		series->setName(QString(tr(u8"速度%1[t]")).arg(j));
@@ -87,8 +87,8 @@ void ChartView::init()
 		series->attachAxis(yAxis);
 	}
 
-	chart->setAnimationOptions(QChart::AllAnimations);
-	chart->setTitle(tr(u8"时域信号"));
+	chart->setAnimationOptions(QChart::NoAnimation);
+	//chart->setTitle(tr(u8"时域信号"));
 	chart->legend()->setAlignment(Qt::AlignBottom);
 
 	setChart(chart);
