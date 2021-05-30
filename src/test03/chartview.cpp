@@ -29,12 +29,39 @@
 
 #include "chartview.h"
 #include <QtGui/QMouseEvent>
+#include "chart.h"
+#include <QtCore/QtMath>
+#include <QtCore/QRandomGenerator>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QValueAxis>
 
-ChartView::ChartView(QChart *chart, QWidget *parent) :
-    QChartView(chart, parent),
+ChartView::ChartView(QWidget *parent) :
+    QChartView(nullptr, parent),
     m_isTouching(false)
 {
     setRubberBand(QChartView::RectangleRubberBand);
+}
+
+void ChartView::init()
+{
+	//![1]
+	QLineSeries *series = new QLineSeries();
+	for (int i = 0; i < 500; i++) {
+		QPointF p((qreal)i, qSin(M_PI / 50 * i) * 100);
+		p.ry() += QRandomGenerator::global()->bounded(20);
+		*series << p;
+	}
+	//![1]
+
+	Chart *chart = new Chart();
+	chart->setAnimationOptions(QChart::AllAnimations);
+	chart->addSeries(series);
+	chart->setTitle("Zoom in/out example");
+	chart->setAnimationOptions(QChart::SeriesAnimations);
+	chart->legend()->hide();
+	chart->createDefaultAxes();
+
+	setChart(chart);
 }
 
 bool ChartView::viewportEvent(QEvent *event)

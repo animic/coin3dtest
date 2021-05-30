@@ -40,7 +40,10 @@ class ChartView : public QChartView
 //![1]
 {
 public:
-    ChartView(QChart *chart, QWidget *parent = 0);
+    ChartView(QWidget *parent = 0);
+
+public:
+	void init();
 
 //![2]
 protected:

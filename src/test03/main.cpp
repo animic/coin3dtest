@@ -27,14 +27,9 @@
 **
 ****************************************************************************/
 
-#include "chart.h"
-#include "chartview.h"
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
-#include <QtCore/QtMath>
-#include <QtCore/QRandomGenerator>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QValueAxis>
+#include "chartview.h"
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -42,25 +37,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-//![1]
-    QLineSeries *series = new QLineSeries();
-    for (int i = 0; i < 500; i++) {
-        QPointF p((qreal) i, qSin(M_PI / 50 * i) * 100);
-        p.ry() += QRandomGenerator::global()->bounded(20);
-        *series << p;
-    }
-//![1]
-
-    Chart *chart = new Chart();
-	chart->setAnimationOptions(QChart::AllAnimations);
-    chart->addSeries(series);
-    chart->setTitle("Zoom in/out example");
-    chart->setAnimationOptions(QChart::SeriesAnimations);
-    chart->legend()->hide();
-    chart->createDefaultAxes();
-
-    ChartView *chartView = new ChartView(chart);
+    ChartView *chartView = new ChartView();
     chartView->setRenderHint(QPainter::Antialiasing);
+	chartView->init();
 
     QMainWindow window;
     window.setCentralWidget(chartView);
